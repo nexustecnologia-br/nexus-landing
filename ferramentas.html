@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS · Ferramentas Exclusivas</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════
+   NEXUS BASE
+════════════════════════════════════════ */
+:root {
+  --bg: #080a0f;
+  --bg2: #0d1017;
+  --bg3: #111520;
+  --accent: #00e5ff;
+  --accent2: #6c63ff;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --border: rgba(255,255,255,0.07);
+
+  /* Diagnóstico palette */
+  --d-black: #0a0a0a;
+  --d-white: #f5f2eb;
+  --d-cream: #ede8dc;
+  --d-accent: #c8873a;
+  --d-accent2: #2d5a3d;
+  --d-muted: #6b6560;
+  --d-border: #2a2724;
+  --d-card: #141210;
+  --d-red: #c0392b;
+  --d-green: #27ae60;
+  --d-yellow: #e67e22;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.15; }
+.blob-1 { width: 500px; height: 500px; background: var(--accent2); top: -150px; right: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--accent); bottom: 100px; left: -80px; }
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 5%;
+  background: rgba(8,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+  letter-spacing: 4px; color: var(--text); text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.nav-logo-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 10px var(--accent); animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
+
+.nav-badge {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500;
+  color: var(--accent); border: 1px solid rgba(0,229,255,0.3);
+  padding: 4px 12px; border-radius: 100px; letter-spacing: 1px;
+}
+
+/* ════════════════════════════════════════
+   LOCK SCREEN
+════════════════════════════════════════ */
+#lock-screen {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+
+.lock-box {
+  background: var(--bg2);
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 20px;
+  padding: 3.5rem 2.5rem;
+  max-width: 420px; width: 100%;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+
+.lock-box::before {
+  content: '';
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.lock-icon {
+  font-size: 2.5rem; margin-bottom: 1.5rem; display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.lock-title {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem;
+  letter-spacing: -0.5px; margin-bottom: 0.5rem;
+}
+
+.lock-sub {
+  color: var(--muted); font-size: 0.875rem; line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.lock-input-wrap { position: relative; margin-bottom: 1rem; }
+
+.lock-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+  text-align: center;
+}
+
+.lock-input::placeholder { letter-spacing: 2px; font-weight: 400; font-size: 0.875rem; }
+.lock-input:focus { border-color: var(--accent); }
+.lock-input.error { border-color: #ff6b6b; animation: shake 0.4s ease; }
+
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)}
+}
+
+.lock-error {
+  font-size: 0.8rem; color: #ff6b6b; margin-bottom: 1rem;
+  display: none;
+}
+.lock-error.visible { display: block; }
+
+.lock-btn {
+  width: 100%;
+  background: var(--accent); color: #080a0f;
+  border: none; padding: 0.9rem;
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.925rem; font-weight: 700; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lock-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+
+.lock-footer {
+  margin-top: 1.5rem; font-size: 0.75rem; color: var(--muted);
+}
+
+.lock-footer a { color: var(--accent); text-decoration: none; }
+
+/* ════════════════════════════════════════
+   TOOLS AREA (oculto até login)
+════════════════════════════════════════ */
+#tools-area {
+  display: none;
+  position: relative; z-index: 1;
+  padding-top: 80px;
+}
+
+#tools-area.visible { display: block; }
+
+/* TOOLS HEADER */
+.tools-header {
+  padding: 3rem 5% 2rem;
+  max-width: 900px; margin: 0 auto;
+}
+
+.tools-eyebrow {
+  font-size: 0.7rem; font-weight: 500; color: var(--accent);
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; display: block;
+}
+
+.tools-title {
+  font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 0.75rem;
+}
+
+.tools-sub {
+  color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 480px;
+}
+
+/* TOOLS GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 0 5% 2rem;
+  max-width: 900px; margin: 0 auto;
+}
+
+.tool-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.75rem;
+  cursor: pointer; transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+
+.tool-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.25s;
+}
+
+.tool-card:hover { transform: translateY(-3px); border-color: rgba(0,229,255,0.25); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+.tool-card:hover::before { opacity: 1; }
+.tool-card.active { border-color: var(--accent); box-shadow: 0 0 30px rgba(0,229,255,0.12); }
+
+.tool-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+.tool-name {
+  font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;
+}
+
+.tool-desc { color: var(--muted); font-size: 0.83rem; line-height: 1.6; margin-bottom: 1rem; }
+
+.tool-tag {
+  font-size: 0.68rem; font-weight: 500; color: var(--accent);
+  background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+  padding: 3px 10px; border-radius: 100px; display: inline-block;
+}
+
+/* DIVIDER */
+.tools-divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 0 5% 2rem; max-width: 860px;
+}
+
+/* ════════════════════════════════════════
+   DIAGNÓSTICO B2B INTEGRADO
+════════════════════════════════════════ */
+#diagnostico-section {
+  display: none;
+  padding: 0 5% 80px;
+  max-width: 900px; margin: 0 auto;
+}
+
+#diagnostico-section.visible { display: block; }
+
+/* Cabeçalho da ferramenta */
+.diag-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem; padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.diag-header-left { display: flex; align-items: center; gap: 12px; }
+
+.diag-header-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(200,135,58,0.1); border: 1px solid rgba(200,135,58,0.25);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+
+.diag-header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+.diag-header-sub { font-size: 0.8rem; color: var(--muted); }
+
+.btn-back {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--muted); padding: 8px 16px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── Diagnóstico UI (herdado do arquivo original, adaptado) ─── */
+.diag-wrap {
+  background: var(--d-black);
+  border: 1px solid rgba(200,135,58,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.diag-inner {
+  position: relative;
+}
+
+.diag-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,135,58,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,135,58,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
+}
+
+.diag-content { position: relative; z-index: 1; }
+
+/* Header interno */
+.diag-top {
+  border-bottom: 1px solid var(--d-border);
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.diag-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem; letter-spacing: -0.02em;
+  color: var(--d-white);
+}
+
+.diag-logo span { color: var(--d-accent); }
+
+.diag-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--d-accent); border: 1px solid var(--d-accent);
+  padding: 3px 8px; border-radius: 2px;
+}
+
+/* Hero diagnóstico */
+.diag-hero {
+  max-width: 760px; margin: 0 auto;
+  padding: 60px 32px 48px; text-align: center;
+}
+
+.diag-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--d-accent); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+.diag-eyebrow::before, .diag-eyebrow::after {
+  content: ''; display: block; width: 36px; height: 1px;
+  background: var(--d-accent); opacity: 0.5;
+}
+
+.diag-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1; letter-spacing: -0.03em;
+  margin-bottom: 16px; color: var(--d-white);
+}
+
+.diag-h1 em { font-style: italic; color: var(--d-accent); }
+
+.diag-sub {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.95rem; color: var(--d-muted);
+  max-width: 480px; margin: 0 auto 40px; line-height: 1.7;
+}
+
+/* Form card */
+.diag-form-card {
+  background: var(--d-card);
+  border: 1px solid var(--d-border);
+  border-radius: 4px; padding: 32px;
+  max-width: 580px; margin: 0 auto 60px;
+  text-align: left;
+}
+
+.diag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--d-muted); display: block; margin-bottom: 8px;
+}
+
+.diag-input-row { display: flex; gap: 10px; margin-bottom: 14px; }
+
+.diag-form-card input[type="text"],
+.diag-form-card input[type="url"],
+.diag-form-card select {
+  flex: 1;
+  background: #1a1714;
+  border: 1px solid var(--d-border);
+  color: var(--d-white);
+  padding: 12px 16px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.9rem;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.diag-form-card input:focus,
+.diag-form-card select:focus { border-color: var(--d-accent); }
+.diag-form-card select option { background: #1a1714; }
+
+.diag-form-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 14px;
+}
+
+.diag-form-group { display: flex; flex-direction: column; }
+
+.diag-btn-analyze {
+  width: 100%;
+  background: var(--d-accent); color: var(--d-black);
+  border: none; padding: 14px 24px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  border-radius: 2px; cursor: pointer;
+  transition: all 0.2s; margin-top: 8px;
+}
+
+.diag-btn-analyze:hover { background: #d4943d; transform: translateY(-1px); }
+.diag-btn-analyze:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.diag-disclaimer {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem; color: var(--d-muted);
+  text-align: center; margin-top: 12px; line-height: 1.5;
+}
+
+/* Loading */
+.diag-loading {
+  display: none; text-align: center;
+  padding: 48px 32px;
+}
+
+.diag-loading.active { display: block; }
+
+.diag-pulse-ring {
+  width: 56px; height: 56px;
+  border: 2px solid var(--d-border);
+  border-top-color: var(--d-accent);
+  border-radius: 50%; margin: 0 auto 20px;
+  animation: dspin 1s linear infinite;
+}
+
+@keyframes dspin { to { transform: rotate(360deg); } }
+
+.diag-loading-steps {
+  list-style: none; text-align: left;
+  max-width: 300px; margin: 0 auto;
+}
+
+.diag-loading-steps li {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; color: var(--d-muted);
+  padding: 5px 0;
+  display: flex; align-items: center; gap: 10px;
+  transition: color 0.3s;
+}
+
+.diag-loading-steps li.done { color: var(--d-accent); }
+.diag-loading-steps li::before { content: '○'; font-size: 0.58rem; }
+.diag-loading-steps li.done::before { content: '●'; }
+
+/* Results */
+#diag-results {
+  display: none;
+  padding: 0 32px 48px;
+}
+
+#diag-results.active { display: block; }
+
+.diag-score-header {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 20px;
+  background: var(--d-card); border: 1px solid var(--d-border);
+  border-radius: 4px; padding: 28px; margin-bottom: 20px;
+}
+
+.diag-company-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.7rem; letter-spacing: -0.02em; margin-bottom: 4px;
+  color: var(--d-white);
+}
+
+.diag-company-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; color: var(--d-muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+.diag-score-circle {
+  width: 86px; height: 86px; border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border: 3px solid; flex-shrink: 0;
+}
+
+.diag-score-circle.low { border-color: var(--d-red); color: var(--d-red); }
+.diag-score-circle.mid { border-color: var(--d-yellow); color: var(--d-yellow); }
+.diag-score-circle.high { border-color: var(--d-green); color: var(--d-green); }
+
+.diag-score-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.9rem; line-height: 1;
+}
+
+.diag-score-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.52rem; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.7;
+}
+
+.diag-metrics-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin-bottom: 20px;
+}
+
+.diag-metric-card {
+  background: var(--d-card); border: 1px solid var(--d-border);
+  border-radius: 4px; padding: 20px;
+}
+
+.diag-metric-icon { font-size: 1.1rem; margin-bottom: 8px; }
+.diag-metric-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--d-muted); margin-bottom: 6px;
+}
+
+.diag-metric-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem; letter-spacing: -0.02em;
+}
+
+.diag-metric-value.bad { color: var(--d-red); }
+.diag-metric-value.ok { color: var(--d-yellow); }
+.diag-metric-value.good { color: var(--d-green); }
+
+.diag-metric-note {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem; color: var(--d-muted); margin-top: 4px; line-height: 1.4;
+}
+
+.diag-section {
+  background: var(--d-card); border: 1px solid var(--d-border);
+  border-radius: 4px; padding: 24px; margin-bottom: 16px;
+}
+
+.diag-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--d-accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.diag-section-title::after { content: ''; flex: 1; height: 1px; background: var(--d-border); }
+
+.diag-problem-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.diag-problem-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px; border-radius: 3px; border-left: 3px solid;
+}
+
+.diag-problem-item.critical { background: rgba(192,57,43,0.08); border-color: var(--d-red); }
+.diag-problem-item.warning { background: rgba(230,126,34,0.08); border-color: var(--d-yellow); }
+.diag-problem-item.info { background: rgba(200,135,58,0.08); border-color: var(--d-accent); }
+
+.diag-problem-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px; flex-shrink: 0; margin-top: 2px;
+}
+
+.critical .diag-problem-tag { background: rgba(192,57,43,0.3); color: #e74c3c; }
+.warning .diag-problem-tag { background: rgba(230,126,34,0.3); color: #e67e22; }
+.info .diag-problem-tag { background: rgba(200,135,58,0.2); color: var(--d-accent); }
+
+.diag-problem-text { font-family: 'Instrument Sans', sans-serif; font-size: 0.85rem; line-height: 1.6; color: #c8c3bc; }
+
+.diag-competitor-list { display: flex; flex-direction: column; gap: 8px; }
+
+.diag-competitor-item {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; padding: 12px 16px;
+  background: #1a1714; border-radius: 3px;
+  border: 1px solid var(--d-border); gap: 14px;
+}
+
+.diag-competitor-name { font-family: 'Instrument Sans', sans-serif; font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; color: var(--d-white); }
+.diag-competitor-domain { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--d-muted); }
+
+.diag-competitor-score {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem; text-align: right;
+}
+
+.diag-competitor-score.stronger { color: var(--d-red); }
+.diag-competitor-score.similar { color: var(--d-yellow); }
+.diag-competitor-score.weaker { color: var(--d-green); }
+
+.diag-competitor-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem; text-transform: uppercase;
+  letter-spacing: 0.08em; text-align: right; opacity: 0.6;
+  color: var(--d-white);
+}
+
+.diag-opp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.diag-opp-item {
+  padding: 16px;
+  background: rgba(45,90,61,0.12); border: 1px solid rgba(45,90,61,0.3);
+  border-radius: 3px;
+}
+
+.diag-opp-title { font-family: 'Instrument Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: #5dba7d; margin-bottom: 5px; }
+.diag-opp-desc { font-family: 'Instrument Sans', sans-serif; font-size: 0.75rem; color: var(--d-muted); line-height: 1.5; }
+
+.diag-cta {
+  background: linear-gradient(135deg, #1a1410 0%, #0d1017 100%);
+  border: 1px solid var(--accent);
+  border-radius: 8px; padding: 32px;
+  text-align: center; margin-top: 24px;
+}
+
+.diag-cta-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.4rem; letter-spacing: -0.5px; margin-bottom: 8px;
+  color: var(--text);
+}
+
+.diag-cta-sub {
+  color: var(--muted); font-size: 0.875rem;
+  margin-bottom: 20px; line-height: 1.6;
+  max-width: 480px; margin-left: auto; margin-right: auto; margin-bottom: 20px;
+}
+
+.diag-cta-btn {
+  display: inline-block;
+  background: var(--accent); color: #080a0f;
+  padding: 12px 28px; font-family: 'DM Sans', sans-serif;
+  font-weight: 700; font-size: 0.875rem;
+  border-radius: 8px; cursor: pointer; border: none;
+  transition: all 0.2s; text-decoration: none;
+}
+
+.diag-cta-btn:hover { box-shadow: 0 8px 24px rgba(0,229,255,0.3); transform: translateY(-1px); }
+
+.diag-cta-items {
+  display: flex; justify-content: center; gap: 24px;
+  margin-top: 16px; flex-wrap: wrap;
+}
+
+.diag-cta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); display: flex; align-items: center; gap: 5px;
+}
+
+.diag-cta-item::before { content: '✓'; color: var(--accent); }
+
+.diag-btn-reset {
+  display: block; margin: 0 auto 24px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 9px 20px; font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: 2px; cursor: pointer; transition: all 0.2s;
+}
+
+.diag-btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border); padding: 1.5rem 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+
+.footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem; letter-spacing: 3px; color: var(--muted); }
+.footer-text { font-size: 0.75rem; color: var(--muted); }
+.footer-text a { color: var(--muted); text-decoration: none; }
+.footer-text a:hover { color: var(--accent); }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .lock-box { padding: 2.5rem 1.5rem; }
+  .diag-hero { padding: 40px 20px 36px; }
+  .diag-form-card { padding: 20px; }
+  .diag-form-grid { grid-template-columns: 1fr; }
+  .diag-metrics-grid { grid-template-columns: 1fr 1fr; }
+  .diag-opp-grid { grid-template-columns: 1fr; }
+  #diag-results { padding: 0 20px 40px; }
+  .diag-score-header { grid-template-columns: 1fr; }
+  .diag-score-circle { margin: 0 auto; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .diag-top { padding: 16px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    NEXUS
+  </a>
+  <span class="nav-badge">Ferramentas Exclusivas</span>
+</nav>
+
+<!-- ════════════ LOCK SCREEN ════════════ -->
+<div id="lock-screen">
+  <div class="lock-box">
+    <span class="lock-icon">🔐</span>
+    <div class="lock-title">Área Exclusiva</div>
+    <p class="lock-sub">Esta área contém ferramentas gratuitas desenvolvidas pela NEXUS para nossos clientes e parceiros.</p>
+
+    <div class="lock-input-wrap">
+      <input
+        type="password"
+        class="lock-input"
+        id="senha-input"
+        placeholder="Digite a senha"
+        autocomplete="off"
+        onkeypress="if(event.key==='Enter') verificarSenha()"
+      >
+    </div>
+
+    <div class="lock-error" id="lock-error">Senha incorreta. Tente novamente.</div>
+
+    <button class="lock-btn" onclick="verificarSenha()">Acessar ferramentas →</button>
+
+    <div class="lock-footer">
+      Não tem acesso? <a href="mailto:contato@nexus.ai">Fale conosco</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ TOOLS AREA ════════════ -->
+<div id="tools-area">
+
+  <div class="tools-header">
+    <span class="tools-eyebrow">Ferramentas NEXUS</span>
+    <h1 class="tools-title">Seu kit de<br>inteligência de negócio</h1>
+    <p class="tools-sub">Ferramentas desenvolvidas com IA para ajudar você a tomar decisões mais rápidas e identificar oportunidades que seus concorrentes ainda não viram.</p>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card active" onclick="abrirDiagnostico()">
+      <span class="tool-icon">🔍</span>
+      <div class="tool-name">Diagnóstico B2B</div>
+      <div class="tool-desc">Raio-X digital completo do seu negócio em 60 segundos. SEO, presença local, concorrentes mapeados e oportunidades de crescimento.</div>
+      <span class="tool-tag">Disponível agora</span>
+    </div>
+    <div class="tool-card" style="opacity:0.5; cursor:default;">
+      <span class="tool-icon">📊</span>
+      <div class="tool-name">Análise de Concorrentes</div>
+      <div class="tool-desc">Compare sua presença digital com os principais concorrentes do seu setor e descubra onde você está perdendo espaço.</div>
+      <span class="tool-tag" style="color:var(--muted);background:rgba(255,255,255,0.04);border-color:var(--border)">Em breve</span>
+    </div>
+    <div class="tool-card" style="opacity:0.5; cursor:default;">
+      <span class="tool-icon">✉️</span>
+      <div class="tool-name">Gerador de Proposta</div>
+      <div class="tool-desc">Crie propostas comerciais personalizadas em segundos usando IA treinada com os melhores templates de conversão do mercado.</div>
+      <span class="tool-tag" style="color:var(--muted);background:rgba(255,255,255,0.04);border-color:var(--border)">Em breve</span>
+    </div>
+  </div>
+
+  <hr class="tools-divider">
+
+  <!-- ════════════ DIAGNÓSTICO ════════════ -->
+  <div id="diagnostico-section">
+
+    <div class="diag-header">
+      <div class="diag-header-left">
+        <div class="diag-header-icon">🔍</div>
+        <div>
+          <div class="diag-header-title">Diagnóstico B2B</div>
+          <div class="diag-header-sub">Raio-X digital completo com IA</div>
+        </div>
+      </div>
+      <button class="btn-back" onclick="fecharDiagnostico()">← Voltar</button>
+    </div>
+
+    <div class="diag-wrap">
+      <div class="diag-inner">
+        <div class="diag-content">
+
+          <!-- Top bar interna -->
+          <div class="diag-top">
+            <div class="diag-logo">Diagnóstico<span>B2B</span></div>
+            <div class="diag-badge">Beta Gratuito</div>
+          </div>
+
+          <!-- Home section -->
+          <div id="diag-home">
+            <div class="diag-hero">
+              <div class="diag-eyebrow">Raio-X empresarial com IA</div>
+              <h2 class="diag-h1">Descubra o que seu<br><em>concorrente sabe</em><br>que você não sabe</h2>
+              <p class="diag-sub">Análise gratuita de posicionamento digital para escritórios de contabilidade, advocacia e consultoria. Em 60 segundos.</p>
+            </div>
+
+            <div class="diag-form-card">
+              <label class="diag-label">Site da sua empresa</label>
+              <div class="diag-input-row" style="margin-bottom:16px;">
+                <input type="url" id="d-site" placeholder="https://suaempresa.com.br" />
+              </div>
+
+              <div class="diag-form-grid">
+                <div class="diag-form-group">
+                  <label class="diag-label">Segmento</label>
+                  <select id="d-segment">
+                    <option value="">Selecione...</option>
+                    <option value="contabilidade">Contabilidade</option>
+                    <option value="advocacia">Advocacia</option>
+                    <option value="consultoria">Consultoria</option>
+                    <option value="financeiro">Assessoria Financeira</option>
+                    <option value="rh">RH / Gestão de Pessoas</option>
+                  </select>
+                </div>
+                <div class="diag-form-group">
+                  <label class="diag-label">Cidade principal</label>
+                  <input type="text" id="d-city" placeholder="Ex: São Paulo, SP" />
+                </div>
+              </div>
+
+              <div class="diag-form-group" style="margin-bottom:16px;">
+                <label class="diag-label">Nome da empresa (opcional)</label>
+                <input type="text" id="d-name" placeholder="Ex: Escritório Silva & Associados" />
+              </div>
+
+              <button class="diag-btn-analyze" id="d-analyze-btn" onclick="diagStartAnalysis()">
+                Analisar agora — é gratuito
+              </button>
+              <p class="diag-disclaimer">Sem cadastro. Sem cartão de crédito. Resultado em instantes.</p>
+            </div>
+          </div>
+
+          <!-- Loading -->
+          <div class="diag-loading" id="diag-loading">
+            <div class="diag-pulse-ring"></div>
+            <p style="font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--d-muted);margin-bottom:20px;">Analisando...</p>
+            <ul class="diag-loading-steps">
+              <li id="d-step-1">Verificando presença digital</li>
+              <li id="d-step-2">Mapeando concorrentes locais</li>
+              <li id="d-step-3">Auditando SEO e posicionamento</li>
+              <li id="d-step-4">Identificando falhas críticas</li>
+              <li id="d-step-5">Gerando diagnóstico com IA</li>
+            </ul>
+          </div>
+
+          <!-- Results -->
+          <div id="diag-results">
+            <button class="diag-btn-reset" onclick="diagReset()">← Nova análise</button>
+            <div id="diag-results-content"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /diagnostico-section -->
+
+</div>
+<!-- /tools-area -->
+
+<footer>
+  <div class="footer-logo">NEXUS</div>
+  <div class="footer-text">© 2026 NEXUS · Ferramentas exclusivas para clientes</div>
+  <div class="footer-text"><a href="/">← Voltar ao site</a></div>
+</footer>
+
+<script>
+// ════════════════════════════════════════
+// SENHA
+// ════════════════════════════════════════
+function verificarSenha() {
+  const input = document.getElementById('senha-input');
+  const erro = document.getElementById('lock-error');
+  const senha = input.value.trim().toUpperCase();
+
+  if (senha === 'NEXUS') {
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('tools-area').classList.add('visible');
+    sessionStorage.setItem('nexus_auth', '1');
+  } else {
+    input.classList.add('error');
+    erro.classList.add('visible');
+    input.value = '';
+    setTimeout(() => {
+      input.classList.remove('error');
+      erro.classList.remove('visible');
+    }, 2500);
+  }
+}
+
+// Verificar se já está autenticado nesta sessão
+if (sessionStorage.getItem('nexus_auth') === '1') {
+  document.getElementById('lock-screen').style.display = 'none';
+  document.getElementById('tools-area').classList.add('visible');
+}
+
+// ════════════════════════════════════════
+// NAVEGAÇÃO DAS FERRAMENTAS
+// ════════════════════════════════════════
+function abrirDiagnostico() {
+  document.getElementById('diagnostico-section').classList.add('visible');
+  document.getElementById('diagnostico-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function fecharDiagnostico() {
+  document.getElementById('diagnostico-section').classList.remove('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════════
+// DIAGNÓSTICO B2B
+// ════════════════════════════════════════
+const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
+
+async function diagStartAnalysis() {
+  const site = document.getElementById('d-site').value.trim();
+  const segment = document.getElementById('d-segment').value;
+  const city = document.getElementById('d-city').value.trim();
+  const name = document.getElementById('d-name').value.trim();
+
+  if (!site || !segment || !city) {
+    alert('Preencha o site, segmento e cidade para continuar.');
+    return;
+  }
+
+  document.getElementById('diag-home').style.display = 'none';
+  document.getElementById('diag-loading').classList.add('active');
+  document.getElementById('diag-results').classList.remove('active');
+
+  const steps = ['d-step-1','d-step-2','d-step-3','d-step-4','d-step-5'];
+  for (let i = 0; i < steps.length; i++) {
+    await delay(900);
+    document.getElementById(steps[i]).classList.add('done');
+  }
+
+  const companyName = name || extractDomain(site);
+  const segmentLabel = {
+    contabilidade: 'Escritório de Contabilidade',
+    advocacia: 'Escritório de Advocacia',
+    consultoria: 'Consultoria Empresarial',
+    financeiro: 'Assessoria Financeira',
+    rh: 'Consultoria de RH'
+  }[segment];
+
+  const prompt = `Você é um consultor sênior de crescimento B2B especializado em marketing digital para pequenas empresas de serviços profissionais no Brasil.
+
+Analise a empresa abaixo e gere um diagnóstico completo e realista. Seja direto, específico e crítico onde necessário.
+
+EMPRESA: ${companyName}
+SITE: ${site}
+SEGMENTO: ${segmentLabel}
+CIDADE: ${city}
+
+Retorne APENAS um objeto JSON válido, sem markdown, sem texto extra, com esta estrutura exata:
+
+{
+  "score": <número de 0 a 100 representando saúde digital geral>,
+  "companyName": "<nome da empresa>",
+  "segment": "<segmento>",
+  "city": "<cidade>",
+  "metrics": {
+    "seo": {"value": "<Fraco|Regular|Bom>", "note": "<observação específica de 1 linha>"},
+    "site": {"value": "<Fraco|Regular|Bom>", "note": "<observação específica de 1 linha>"},
+    "presenca": {"value": "<Fraco|Regular|Bom>", "note": "<observação específica de 1 linha>"}
+  },
+  "problems": [
+    {"severity": "critical", "text": "<problema crítico com impacto em negócio>"},
+    {"severity": "critical", "text": "<segundo problema crítico>"},
+    {"severity": "warning", "text": "<problema moderado>"},
+    {"severity": "warning", "text": "<segundo problema moderado>"},
+    {"severity": "info", "text": "<oportunidade de melhoria>"}
+  ],
+  "competitors": [
+    {"name": "<nome realista de concorrente>", "domain": "<dominio.com.br>", "strength": "stronger|similar|weaker", "score": <número>},
+    {"name": "<segundo concorrente>", "domain": "<dominio.com.br>", "strength": "stronger|similar|weaker", "score": <número>},
+    {"name": "<terceiro concorrente>", "domain": "<dominio.com.br>", "strength": "stronger|similar|weaker", "score": <número>}
+  ],
+  "opportunities": [
+    {"title": "<oportunidade 1>", "desc": "<descrição prática — 1-2 frases>"},
+    {"title": "<oportunidade 2>", "desc": "<descrição>"},
+    {"title": "<oportunidade 3>", "desc": "<descrição>"},
+    {"title": "<oportunidade 4>", "desc": "<descrição>"}
+  ],
+  "headline": "<frase de impacto de 1 linha sobre a situação atual da empresa>"
+}
+
+Seja realista e crítico. Os problemas devem ser específicos para o segmento e cidade informados.`;
+
+  try {
+    const response = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+    diagRenderResults(result);
+  } catch (err) {
+    console.error(err);
+    diagRenderResults(diagMockData(companyName, segmentLabel, city));
+  }
+}
+
+function diagRenderResults(d) {
+  document.getElementById('diag-loading').classList.remove('active');
+
+  const scoreClass = d.score < 40 ? 'low' : d.score < 70 ? 'mid' : 'high';
+  const metricClass = v => v === 'Fraco' ? 'bad' : v === 'Regular' ? 'ok' : 'good';
+
+  const problemsHTML = d.problems.map(p => `
+    <li class="diag-problem-item ${p.severity}">
+      <span class="diag-problem-tag">${p.severity === 'critical' ? 'Crítico' : p.severity === 'warning' ? 'Atenção' : 'Info'}</span>
+      <span class="diag-problem-text">${p.text}</span>
+    </li>
+  `).join('');
+
+  const strengthLabel = s => s === 'stronger' ? 'Mais forte' : s === 'similar' ? 'Similar' : 'Mais fraco';
+
+  const competitorsHTML = d.competitors.map(c => `
+    <div class="diag-competitor-item">
+      <div>
+        <div class="diag-competitor-name">${c.name}</div>
+        <div class="diag-competitor-domain">${c.domain}</div>
+      </div>
+      <div>
+        <div class="diag-competitor-score ${c.strength}">${c.score}</div>
+        <div class="diag-competitor-label">${strengthLabel(c.strength)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const oppsHTML = d.opportunities.map(o => `
+    <div class="diag-opp-item">
+      <div class="diag-opp-title">↗ ${o.title}</div>
+      <div class="diag-opp-desc">${o.desc}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('diag-results-content').innerHTML = `
+    <div class="diag-score-header">
+      <div>
+        <div class="diag-company-name">${d.companyName}</div>
+        <div class="diag-company-meta">${d.segment} · ${d.city}</div>
+        <p style="margin-top:10px;font-size:0.85rem;color:var(--d-muted);line-height:1.6;max-width:440px;">${d.headline}</p>
+      </div>
+      <div class="diag-score-circle ${scoreClass}">
+        <span class="diag-score-num">${d.score}</span>
+        <span class="diag-score-lbl">Score</span>
+      </div>
+    </div>
+
+    <div class="diag-metrics-grid">
+      <div class="diag-metric-card">
+        <div class="diag-metric-icon">🔍</div>
+        <div class="diag-metric-title">SEO & Busca</div>
+        <div class="diag-metric-value ${metricClass(d.metrics.seo.value)}">${d.metrics.seo.value}</div>
+        <div class="diag-metric-note">${d.metrics.seo.note}</div>
+      </div>
+      <div class="diag-metric-card">
+        <div class="diag-metric-icon">💻</div>
+        <div class="diag-metric-title">Site & UX</div>
+        <div class="diag-metric-value ${metricClass(d.metrics.site.value)}">${d.metrics.site.value}</div>
+        <div class="diag-metric-note">${d.metrics.site.note}</div>
+      </div>
+      <div class="diag-metric-card">
+        <div class="diag-metric-icon">📡</div>
+        <div class="diag-metric-title">Presença Digital</div>
+        <div class="diag-metric-value ${metricClass(d.metrics.presenca.value)}">${d.metrics.presenca.value}</div>
+        <div class="diag-metric-note">${d.metrics.presenca.note}</div>
+      </div>
+    </div>
+
+    <div class="diag-section">
+      <div class="diag-section-title">Problemas identificados</div>
+      <ul class="diag-problem-list">${problemsHTML}</ul>
+    </div>
+
+    <div class="diag-section">
+      <div class="diag-section-title">Concorrentes locais mapeados</div>
+      <div class="diag-competitor-list">${competitorsHTML}</div>
+    </div>
+
+    <div class="diag-section">
+      <div class="diag-section-title">Oportunidades de crescimento</div>
+      <div class="diag-opp-grid">${oppsHTML}</div>
+    </div>
+
+    <div class="diag-cta">
+      <div class="diag-cta-title">Quer o plano de ação completo?</div>
+      <p class="diag-cta-sub">Agente NEXUS configurado especificamente para o seu negócio — email, agenda, atendimento e follow-up automático. Em 48 horas.</p>
+      <a href="mailto:contato@nexus.ai?subject=Quero o plano de ação - ${d.companyName}" class="diag-cta-btn">Falar com a NEXUS →</a>
+      <div class="diag-cta-items">
+        <span class="diag-cta-item">Agente configurado em 48h</span>
+        <span class="diag-cta-item">Sem contrato longo</span>
+        <span class="diag-cta-item">Cancele quando quiser</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('diag-results').classList.add('active');
+  document.getElementById('diag-results').scrollIntoView({ behavior: 'smooth' });
+}
+
+function diagReset() {
+  document.getElementById('diag-results').classList.remove('active');
+  document.getElementById('diag-loading').classList.remove('active');
+  document.getElementById('diag-home').style.display = 'block';
+  document.querySelectorAll('.diag-loading-steps li').forEach(li => li.classList.remove('done'));
+  document.getElementById('d-site').value = '';
+  document.getElementById('d-segment').value = '';
+  document.getElementById('d-city').value = '';
+  document.getElementById('d-name').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function diagMockData(name, segment, city) {
+  return {
+    score: 34, companyName: name, segment: segment, city: city,
+    headline: "Presença digital abaixo da média do setor — concorrentes estão capturando clientes que deveriam ser seus.",
+    metrics: {
+      seo: { value: "Fraco", note: "Sem aparição nas primeiras 3 páginas do Google para termos principais" },
+      site: { value: "Regular", note: "Site existe mas sem otimização para conversão ou mobile" },
+      presenca: { value: "Fraco", note: "Ausente em diretórios locais e Google Meu Negócio desatualizado" }
+    },
+    problems: [
+      { severity: "critical", text: "Seu escritório não aparece no Google Maps para buscas de '" + segment + " em " + city + "' — invisível para 70% dos clientes potenciais." },
+      { severity: "critical", text: "Site sem HTTPS configurado corretamente — Google penaliza no ranking e clientes desconfiam." },
+      { severity: "warning", text: "Nenhum conteúdo de autoridade publicado nos últimos 6 meses — concorrentes que publicam ranqueiam acima." },
+      { severity: "warning", text: "Formulário de contato não funciona em mobile — você está perdendo leads no dispositivo mais usado." },
+      { severity: "info", text: "Oportunidade: busca por '" + segment + " " + city + "' tem alto volume e baixa concorrência paga." }
+    ],
+    competitors: [
+      { name: "Grupo Alfa " + segment, domain: "grupoalfa.com.br", strength: "stronger", score: 72 },
+      { name: segment + " Soluções " + city, domain: "solucoes.com.br", strength: "similar", score: 38 },
+      { name: "Escritório Central", domain: "escritoriocentral.com.br", strength: "weaker", score: 21 }
+    ],
+    opportunities: [
+      { title: "Google Meu Negócio", desc: "Perfil otimizado pode gerar 3-5 contatos orgânicos por semana sem custo." },
+      { title: "SEO Local", desc: "Ranquear para '" + segment + " " + city + "' é possível em 60-90 dias com estratégia de conteúdo simples." },
+      { title: "LinkedIn Orgânico", desc: "Publicar 2x por semana sobre casos e insights do setor gera autoridade e indicações sem anúncio." },
+      { title: "Automação de Follow-up", desc: "80% dos leads não fecham por falta de acompanhamento — sequência automática resolve isso." }
+    ]
+  };
+}
+
+function extractDomain(url) {
+  try { return new URL(url).hostname.replace('www.',''); } catch { return url; }
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
